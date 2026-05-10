@@ -4,11 +4,19 @@
 >
 > sign once. claim forever. shor can't break us.
 
-Built on top of [vbuterin/sphincsminus](https://github.com/vbuterin/sphincsminus) — Vitalik's
-hash-only post-quantum signature scheme. Every mint slot is gated by a real
-SPHINCS- signature. The signature is verified off-chain (to keep gas sane),
-batched into Merkle roots, and the root is the only thing that touches mainnet.
-The full batch is published to IPFS so anyone can re-verify with Vitalik's Python.
+[![site](https://img.shields.io/badge/site-sphincs.fun-black)](https://sphincs.fun)
+[![mintgate](https://img.shields.io/badge/MintGate-0x6157…f077-blue)](https://etherscan.io/address/0x615771e3510a5898b38ab46da2f5b4ef67a2f077)
+[![token](https://img.shields.io/badge/SphincsMinus-0x04a4…b681-blue)](https://etherscan.io/address/0x04a4e420aaea469bbf8c2dc909f4d8a1f761b681)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+Built on top of Vitalik Buterin's [SPHINCS- reference](https://github.com/ethereum/research/tree/master/sphincs_minus)
+— a hash-only post-quantum signature scheme. Every mint slot is gated by a real
+SPHINCS- signature. The signature is verified off-chain (~700-byte sigs are too
+big for one mainnet tx), and the backend then signs an EIP-712 ECDSA
+**attestation** that the user submits on-chain in a single mint transaction.
+Every full audit record `(pk, sig, msg, attestation)` is publicly retrievable
+from `/proof?pkHash=…` so anyone can re-verify with the original Python
+reference.
 
 ## Live deployment (Ethereum mainnet)
 
