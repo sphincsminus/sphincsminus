@@ -7,30 +7,59 @@ const GATE_ABI = parseAbi([
   "function MAX_MINTS() view returns (uint256)",
 ]);
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Cache-Control", "s-maxage=10");
+// Tried in order. First one that returns is used.
+// `RPC_URL` (env) is prepended if set.
+const FALLBACK_RPCS = [
+  "https://eth.drpc.org",
+  "https://1rpc.io/eth",
+  "https://eth.llamarpc.com",
+  "https://ethereum-rpc.publicnode.com",
+];
 
-  const gate = (process.env.MINTGATEV2_ADDRESS ?? process.env.MINTGATE_ADDRESS) as `0x${string}` | undefined;
-  const rpc  = process.env.RPC_URL;
-
-  let onChain = { mintsDone: "0", maxMints: "20000" };
-  if (gate && rpc) {
+async function readState(gate: `0x${string}`, rpcs: string[]) {
+  let lastErr: any = null;
+  for (const rpc of rpcs) {
     try {
-      const pub = createPublicClient({ chain: mainnet, transport: http(rpc) });
+      const pub = createPublicClient({ chain: mainnet, transport: http(rpc, { timeout: 4000 }) });
       const [m, max] = await Promise.all([
         pub.readContract({ address: gate, abi: GATE_ABI, functionName: "mintsDone" }),
         pub.readContract({ address: gate, abi: GATE_ABI, functionName: "MAX_MINTS" }),
       ]);
-      onChain = { mintsDone: m.toString(), maxMints: max.toString() };
+      return { ok: true as const, mintsDone: m.toString(), maxMints: max.toString(), rpc };
     } catch (e: any) {
-      // fall through with defaults
+      lastErr = e?.shortMessage ?? e?.message ?? String(e);
     }
+  }
+  return { ok: false as const, error: lastErr };
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=60");
+
+  const gate = (process.env.MINTGATEV2_ADDRESS ?? process.env.MINTGATE_ADDRESS) as `0x${string}` | undefined;
+  if (!gate) {
+    return res.status(500).json({ ok: false, error: "MINTGATEV2_ADDRESS not configured" });
+  }
+
+  const rpcs = [process.env.RPC_URL, ...FALLBACK_RPCS].filter(Boolean) as string[];
+  const r = await readState(gate, rpcs);
+
+  if (!r.ok) {
+    return res.status(502).json({
+      ok: false,
+      mintGate: gate,
+      error: `all RPCs failed: ${r.error}`,
+    });
   }
 
   return res.status(200).json({
     ok: true,
     mintGate: gate,
-    onChain,
+    rpcUsed: r.rpc,
+    onChain: {
+      mintsDone: r.mintsDone,
+      maxMints:  r.maxMints,
+    },
   });
 }

@@ -13,8 +13,11 @@ export default function Home() {
       <p>
         every mint is unlocked by a real <strong>SPHINCS-</strong> signature
         — the same hash-only post-quantum scheme that vitalik buterin
-        published in <a href="https://github.com/vbuterin/sphincsminus" target="_blank" rel="noreferrer">vbuterin/sphincsminus</a>.
-        no elliptic curves. no shor. no trusted setup. just keccak.
+        published as a reference implementation. no elliptic curves. no shor.
+        no trusted setup. just keccak. all of our code is open source at{" "}
+        <a href="https://github.com/sphincsminus/sphincsminus" target="_blank" rel="noreferrer">
+          github.com/sphincsminus/sphincsminus
+        </a>.
       </p>
 
       <p>
@@ -33,7 +36,7 @@ export default function Home() {
         <div className="k">price per mint</div><div className="v">0.0025 ETH (~$6)</div>
         <div className="k">tokens per mint</div><div className="v">500 $sphincs</div>
         <div className="k">chain</div><div className="v">ethereum mainnet</div>
-        <div className="k">mint mechanic</div><div className="v">SPHINCS- sig (off-chain) → merkle root (on-chain)</div>
+        <div className="k">mint mechanic</div><div className="v">SPHINCS- sig (off-chain) → ECDSA attestation → mint (on-chain)</div>
       </div>
 
       <h2>why</h2>
@@ -65,11 +68,14 @@ export default function Home() {
         <li>contract is <strong>immutable</strong> — no admin, no proxy, no pause.</li>
         <li>backend can <strong>delay</strong> your mint but cannot mint to a wrong address — your address is inside the signed message.</li>
         <li>backend cannot mint <strong>extra</strong> supply — the contract caps public mint at 10M.</li>
-        <li>every batch (every signature, every public key) is posted to <a href="#">ipfs</a>. anyone can re-verify with vitalik&apos;s python.</li>
+        <li>every <code>(pk, sig, msg, attestation)</code> tuple is retrievable at <a href="/proof">/proof</a>. anyone can re-verify with vitalik&apos;s python.</li>
+        <li>all source code (contracts, backend, frontend, whitepaper) is MIT-licensed at <a href="https://github.com/sphincsminus/sphincsminus" target="_blank" rel="noreferrer">github.com/sphincsminus/sphincsminus</a>.</li>
       </ul>
 
-      <p style={{ marginTop: 32 }}>
+      <p style={{ marginTop: 32, display: "flex", gap: 24, flexWrap: "wrap" }}>
         <a href="/mint" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ mint now</a>
+        <a href="https://github.com/sphincsminus/sphincsminus" target="_blank" rel="noreferrer" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ source code (github)</a>
+        <a href="/whitepaper" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ whitepaper</a>
       </p>
     </>
   );
