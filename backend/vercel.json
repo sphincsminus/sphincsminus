@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/sign.py":             { "memory": 1024, "maxDuration": 30 },
+    "api/keygen.py":           { "memory": 1024, "maxDuration": 10 },
+    "api/sign-and-submit.py":  { "memory": 1024, "maxDuration": 30 },
+    "api/sign-and-attest.py":  { "memory": 1024, "maxDuration": 30 },
+    "api/proof.py":            { "memory": 256,  "maxDuration": 5  },
+    "api/status.ts":           { "memory": 256,  "maxDuration": 5  }
+  }
+}

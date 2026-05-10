@@ -1,0 +1,37 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/lib/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# env / secrets — NEVER commit
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets.json
+
+# vercel
+.vercel/
+
+# Etherscan-input dumps that may include compiler metadata (kept locally)
+*_etherscan.json
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
