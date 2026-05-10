@@ -5,6 +5,7 @@
 > sign once. claim forever. shor can't break us.
 
 [![site](https://img.shields.io/badge/site-sphincs.fun-black)](https://sphincs.fun)
+[![twitter](https://img.shields.io/badge/twitter-@SphincsMinus-1da1f2)](https://x.com/SphincsMinus)
 [![mintgate](https://img.shields.io/badge/MintGate-0x6157…f077-blue)](https://etherscan.io/address/0x615771e3510a5898b38ab46da2f5b4ef67a2f077)
 [![token](https://img.shields.io/badge/SphincsMinus-0x04a4…b681-blue)](https://etherscan.io/address/0x04a4e420aaea469bbf8c2dc909f4d8a1f761b681)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)

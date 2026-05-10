@@ -3,7 +3,8 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const GITHUB_URL = "https://github.com/sphincsminus/sphincsminus";
+const GITHUB_URL  = "https://github.com/sphincsminus/sphincsminus";
+const TWITTER_URL = "https://x.com/SphincsMinus";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {tab("/whitepaper", "whitepaper")}
           {tab("/faq", "faq")}
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">github ↗</a>
+          <a href={TWITTER_URL} target="_blank" rel="noreferrer">twitter ↗</a>
         </nav>
       </div>
       <Component {...pageProps} />
@@ -32,6 +34,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <span>sphincs.fun · 2026 · MIT</span>
         <span>
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">source</a>
+          {" · "}
+          <a href={TWITTER_URL} target="_blank" rel="noreferrer">twitter</a>
           {" · "}
           <a href="https://etherscan.io/address/0x615771e3510a5898b38ab46da2f5b4ef67a2f077" target="_blank" rel="noreferrer">mintgate</a>
           {" · "}

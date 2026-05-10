@@ -75,6 +75,7 @@ export default function Home() {
       <p style={{ marginTop: 32, display: "flex", gap: 24, flexWrap: "wrap" }}>
         <a href="/mint" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ mint now</a>
         <a href="https://github.com/sphincsminus/sphincsminus" target="_blank" rel="noreferrer" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ source code (github)</a>
+        <a href="https://x.com/SphincsMinus" target="_blank" rel="noreferrer" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ twitter (@SphincsMinus)</a>
         <a href="/whitepaper" style={{ fontFamily: "var(--mono)", fontSize: 16 }}>→ whitepaper</a>
       </p>
     </>
